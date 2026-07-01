@@ -16,7 +16,7 @@ st.markdown("---")
 
 # FIXED: Pointing to the exact v1 API route found in your docs
 # Ensure it matches your exact active dashboard path from the screenshot!
-BACKEND_URL = "https://phishguard-system-2.onrender.com/api/v1/analyze"
+BACKEND_URL = "https://phishguard-backend-api.onrender.com/api/v1/analyze"
 
 # 2. User Input Section
 target_url = st.text_input("🔗 Enter URL to inspect safely:", placeholder="https://example.com")
