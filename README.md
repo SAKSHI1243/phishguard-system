@@ -14,23 +14,7 @@ The system features a decoupled cloud architecture: a sleek interactive frontend
 
 ---
 
-## 🏗️ System Architecture
 
-PhishGuard is designed using a modern microservices pattern to separate the visual presentation layer from heavy computational machine learning tasks:
-
-[ User Interaction ]
-│
-▼
-┌───────────────┐
-│   Streamlit   │  ◄─── User enters suspicious URL
-│   Frontend    │  ───► Packages URL data into JSON payload
-└───────┬───────┘
-│
-│  (Secure HTTPS POST Request)
-▼
-┌───────────────┐
-│    FastAPI    │  ◄─── Ingests request payload via Pydantic schemas
-│  Core Engine  │  ───► Passes vectorized features through Scikit-Learn Pipeline
 └───────────────┘
 
 1. **The Frontend Dashboard (`Streamlit`):** A responsive, client-facing graphical interface built to securely ingest URLs, manage layout components, display real-time safety matrices, and visualize JSON deep-inspection metrics.
