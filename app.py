@@ -15,7 +15,8 @@ st.write("Drop any suspicious link below to safely dissect its structural proper
 st.markdown("---")
 
 # FIXED: Pointing to the exact v1 API route found in your docs
-BACKEND_URL = "https://phishguard-systems.onrender.com/api/v1/analyze"
+# Ensure it matches your exact active dashboard path from the screenshot!
+BACKEND_URL = "https://phishguard-system-2.onrender.com/api/v1/analyze"
 
 # 2. User Input Section
 target_url = st.text_input("🔗 Enter URL to inspect safely:", placeholder="https://example.com")
