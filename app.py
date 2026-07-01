@@ -16,6 +16,9 @@ st.write("Drop any suspicious link below to safely dissect its structural proper
 
 st.markdown("---")
 
+# Define backend configurations safely at module root scope
+BACKEND_URL = "https://phishguard-systems.onrender.com/predict"
+
 # 2. User Input Section
 target_url = st.text_input("🔗 Enter URL to inspect safely:", placeholder="https://example.com")
 
@@ -25,11 +28,10 @@ if st.button("Run Threat Analysis Matrix", use_container_width=True):
     else:
         with st.spinner("Analyzing threat vectors... Intercepting tokens..."):
             try:
-                # Send the input URL payload to your live FastAPI backend endpoint
-                backend_endpoint = "http://127.0.0.1:8000/api/v1/analyze"
                 payload = {"url": target_url.strip()}
                 
-                response = requests.post(backend_endpoint, json=payload, timeout=10)
+                # Using 15 second timeout to let the Free Render instance spin up if sleeping
+                response = requests.post(BACKEND_URL, json=payload, timeout=15)
                 
                 if response.status_code == 200:
                     data = response.json()
@@ -82,7 +84,10 @@ if st.button("Run Threat Analysis Matrix", use_container_width=True):
                         st.markdown(f"**Visual Brand Spoofing Detected:** `{details['visual_spoofing_detected']}`")
                         
                 else:
-                    st.error("Backend Engine returned an operational error code. Ensure your FastAPI data parsing schemas match.")
+                    st.error(f"Backend Engine returned an operational error code ({response.status_code}). Ensure your FastAPI data parsing schemas match.")
                     
+            except requests.exceptions.Timeout:
+                st.error("⏱️ **Connection Timeout!** Your free Render backend backend instance is spinning up from cold-sleep. Give it a brief moment and try scanning again!")
+                
             except requests.exceptions.ConnectionError:
-                st.error("❌ Connection Refused! Make sure your FastAPI backend server is currently running on `http://127.0.0.1:8000` via your other terminal window.")
+                st.error(f"❌ **Connection Refused!** Streamlit frontend was unable to hit the cloud API endpoint at `{BACKEND_URL}`. Verify your backend service logs on Render are green and running.")
